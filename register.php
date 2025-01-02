@@ -29,17 +29,17 @@ require_once "/xampp/htdocs/ProjectPHP/AcommodationCRUD/class/Auth.php";
         echo "<div class='alert alert-danger w-100' role='alert'>" . $_GET['error'] . "</div>";
     }
     ?>
-    <div class="card m-4 p-4 w-75 d-flex flex-row">
-        <img src="assets/wallpaper2.jpg" class="w-75 img-rounded" alt="...">
+    <div class="card m-4 p-4 w-75 d-flex flex-md-row flex-xs-column">
+        <img src="assets/wallpaper2.jpg" class="col col-md-6 rounded img-fluid" alt="...">
         <div class="card-body" style="text-align:left;">
-            <h1 class="fw-bold me-5 mt-5">Create a new account!</h1>
-            <form action="" method="post">
+            <h1 class="fw-bold me-5 mt-5" style="color: blue;">Create a new account!</h1>
+            <form action="" method="post" >
                 <label for="">Name</label>
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control" name="name" required>
                 <label for="">Email</label>
-                <input type="text" class="form-control" name="email">
+                <input type="text" class="form-control" name="email" required>
                 <label for="">Password</label>
-                <input type="password" class="form-control" name="password">
+                <input type="password" class="form-control" name="password" required minlength="8">
                 <label for="">Roll</label>
                 <select name="roll" class="form-control" id="">
                     <option value="admin">Admin</option>
@@ -51,21 +51,17 @@ require_once "/xampp/htdocs/ProjectPHP/AcommodationCRUD/class/Auth.php";
     </div>
     </div>
     <?php
-        if (isset($_POST['email'], $_POST['password'])) {
-            if(isset($_POST['email'], $_POST['password']) && strlen($_POST['password']) >= 8 && strlen($_POST['email']) > 8 && strlen($_POST['name']) > 3)
-            {
-                $name = $_POST['name'];
-                $email = $_POST['email'];
-                $password = $_POST['password'];
-                $roll = $_POST['roll'];
-                Authentication::register($name, $email, $password, $roll);
-            }
-    
-        }
-        else
-        {
+    if (isset($_POST['email'], $_POST['password'], $_POST['name'], $_POST['roll'])) {
+        if (isset($_POST['email'], $_POST['password']) && strlen($_POST['password']) >= 8 && strlen($_POST['email']) > 8 && strlen($_POST['name']) > 3) {
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $roll = $_POST['roll'];
+            Authentication::register($name, $email, $password, $roll);
+        } else   {
             echo "<div class='alert alert-danger w-100' role='alert'>All the fields are required.</div>";
         }
+    }
     ?>
 
 </body>

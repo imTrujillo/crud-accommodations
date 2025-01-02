@@ -17,17 +17,17 @@
         <section class="container">
             <?php foreach ($acommodations as $acommodation) { 
                 ?>
-                <div class="card m-4 p-4 w-100 d-flex flex-row">
-                    <img src="assets/image.jpg" class="w-25 img-rounded" alt="...">
+                <div class="card m-4 p-4 d-flex flex-row align-items-center" style="width:95%;">
+                    <img src="assets/image.jpg" class="card-img-top rounded img-rounded w-25" style="height:min-content;" alt="...">
                     <div class="card-body">
                         <h3 class="card-title" style="color:blue;"><?php echo $acommodation['name'] ?></h3>
                         <a class="card-text"><strong><?php echo $acommodation['address'] ?></strong></a>
                         <p class="card-text"><?php echo $acommodation['description'] ?></p>
 
                     </div>
-                    <div class="d-flex justify-content-end flex-column">
-                    <h5 class="text-success">Since $ <?php echo $acommodation['price'] ?></h5>
-                    <a href="login.php"><button class="btn btn-success" style="width: 10rem;"> Book</button> </a>
+                    <div class="d-flex justify-content-end flex-column" style="width: 30%; align-items:end;">
+                    <h5 class="text-success text-end">Since $<?php echo $acommodation['price'] ?></h5>
+                    <a href="login.php"><button class="btn btn-success" style="width: 6rem;"> Book</button> </a>
                     </div>
                 </div>
             <?php } ?>

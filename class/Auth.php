@@ -53,7 +53,7 @@ class Authentication
         session_start();
         if (!isset($_SESSION['id_user']))
         {
-            header('location: login.php?error= You must log in');
+            header("location: login.php?error= <div class='alert alert-danger w-100' role='alert'>You must login.</div>");
             exit;
         }
     }
@@ -74,7 +74,8 @@ class Authentication
                 $id_user = $pdo->lastInsertId();
                 $_SESSION['id_user']=$id_user;
                 $_SESSION['name']=$name;
-                header ("location: index.php");
+                header("location: login.php?error= <div class='alert alert-success w-100' role='alert'>The account has been created.</div>");
+                exit;
             }
             else
             {
@@ -83,8 +84,8 @@ class Authentication
         }
         catch (PDOException $ex)
         {
-            echo "<div class='alert alert-danger w-100' role='alert'>An error has ocurred :(.</div>";
-            echo $ex->getMessage();
+            echo "<div class='alert alert-danger w-100' role='alert'>An error has ocurred :(.";
+            echo $ex->getMessage() . "</div>";
         }
 
     }

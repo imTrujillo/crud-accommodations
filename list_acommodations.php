@@ -17,91 +17,104 @@ Authentication::verifySession();
     include_once "/xampp/htdocs/ProjectPHP/AcommodationCRUD/assets/navbar.php";
     require_once "/xampp/htdocs/ProjectPHP/AcommodationCRUD/class/Booking.php";
     ?>
-    <h3 class="d-flex justify-content-center m-3">Welcome Back <?php echo $_SESSION['name']; ?> !</h3>
+    <div class="d-flex justify-content-center flex-column" style="align-items: center;">
+        <img src="assets/profile-icon.jpg" class=" mx-3" style="width: 14rem; height: 14rem;" alt="">
+        <h3 class=" mx-3 mb-3">Welcome <?php echo $_SESSION['name']; ?> !</h3>
+    </div>
+
     <h1 class="fw-bold mx-5 mt-5">Your reservations</h1>
     <hr class="w-75 mx-5">
     <?php
     $acommodations = Acommodation::getAcommmodationByStatus();
     $bookings = Book::getBookingByUser($_SESSION['id_user']); ?>
 
-    <section class="container center d-flex">
-    <?php if (empty($bookings)) { ?>
-            <p>The reservations will appear here.</p>
+    <section class="container">
+        <?php if (empty($bookings)) { ?>
+            <p class="display-6">The reservations will appear here.</p>
         <?php } else {
-        foreach ($bookings as $booking) 
-        { 
-            ?>
-            <div class="card text-white m-4" style="width: 18rem; background-color:lightseagreen;">
-            <h5 class="card-title bg-color p-3 mb-2 bg-success text-white"> <?php echo $booking['status'] ?></h5>
-                <div class="card-body">
-                    <h5 class="card-title"><?php echo $booking['name'] ?></h5>
-                    <h6 class="card-text"><strong>Check-in Date:</strong> <?php echo $booking['start_date'] ?></h6>
-                    <h6 class="card-text"><strong>Check-out Date:</strong> <?php echo $booking['end_date'] ?></h6>
-                    <?php if ($booking['status'] === 'Active') { ?>
-                        <form action="" method="post">
-                            <input type="hidden" name="id_booking" value="<?php echo $booking['id_booking']; ?>">
-                            <button type="submit" class="btn btn-primary">Cancel</button>
-                        </form>
-                    <?php } ?>
-                </div>
-            </div>
-</div>
-            <?php
-        }}
-            ?>
+        ?>
+            <div class="row justify-content-center">
+                <?php foreach ($bookings as $booking) { ?>
+                    <div class="col-sm-11 col-md-5 col-lg-4 mb-4">
+                        <div class="card text-white m-4" style="width: 18rem; background-color:lightseagreen;">
+                            <h5 class="card-title bg-color p-3 mb-2 bg-success text-white"> <?php echo $booking['status'] ?></h5>
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $booking['name'] ?></h5>
+                                <h6 class="card-text"><strong>Check-in Date:</strong> <?php echo $booking['start_date'] ?></h6>
+                                <h6 class="card-text"><strong>Check-out Date:</strong> <?php echo $booking['end_date'] ?></h6>
+                                <?php if ($booking['status'] === 'Active') { ?>
+                                    <form action="" method="post">
+                                        <input type="hidden" name="id_booking" value="<?php echo $booking['id_booking']; ?>">
+                                        <button type="submit" class="btn btn-primary">Cancel</button>
+                                    </form>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+
+                <?php
+                } ?>
+            </div><?php
+                }
+                    ?>
     </section>
 
     <h2 class="fw-bold mx-5 mt-5">Where do you plan to travel?</h1>
-    <hr class="w-75 mx-5">
-        <section class="container center d-flex">
-            <?php foreach ($acommodations as $acommodation) { 
-                $isBooked = Book::checkBookingsByUser($acommodation['id_acommodation'], $_SESSION['id_user']);
+        <hr class="w-75 mx-5">
+        <section class="container">
+            <div class="row justify-content-center">
+                <?php foreach ($acommodations as $acommodation) {
+                    $isBooked = Book::checkBookingsByUser($acommodation['id_acommodation'], $_SESSION['id_user']);
                 ?>
-                <div class="card bg-light m-3" style="width: 18rem;">
-                    <img src="assets/image.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                    <h6 class="card-text"><?php echo $acommodation['address'] ?></h6>
-                        <h5 class="card-title"><?php echo $acommodation['name'] ?></h5>
-                        <p class="card-text"><?php echo $acommodation['description'] ?></p>
-                        <h5 class="card-title"> $ <?php echo $acommodation['price'] ?></h5>
-                        <?php if (!$isBooked) { ?>
-                            <a href="#" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#ModalStatus<?php echo $acommodation['id_acommodation']; ?>">Book</a>
-                        <?php } else { ?>
-                            <span class="btn btn-secondary btn-lg pt-0 w-100"> Booked </span>
-                        <?php } ?>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="ModalStatus<?php echo $acommodation['id_acommodation']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5 " id="exampleModalLabel">Booking an accommodation</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="col-xs-11 col-md-5 col-lg-4 mb-5">
+                        <div class="card bg-light m-3" style="width: 18rem;">
+                            <img src="assets/image.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h6 class="card-text"><?php echo $acommodation['address'] ?></h6>
+                                <h5 class="card-title"><?php echo $acommodation['name'] ?></h5>
+                                <p class="card-text"><?php echo $acommodation['description'] ?></p>
+                                <h5 class="card-title"> $ <?php echo $acommodation['price'] ?></h5>
+                                <?php if (!$isBooked) { ?>
+                                    <a href="#" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#ModalStatus<?php echo $acommodation['id_acommodation']; ?>">Book</a>
+                                <?php } else { ?>
+                                    <span class="btn btn-secondary btn-lg pt-0 w-100"> Booked </span>
+                                <?php } ?>
                             </div>
-                            <form action="" method="post">
-                                <div class="modal-body">
-                                    <h4 class="p-3 mb-2 alert alert-secondary"><?php echo $acommodation['name']; ?></h4>
-                                    <input type="hidden" name="id_acommodation" value="<?php echo $acommodation['id_acommodation'] ?>">
-                                    <label for="" class="w-100">Check-in-Date</label>
-                                    <input type="date" name="start-date" class="control-form" required>
-                                    <label for="" class="w-100">Check-out-Date</label>
-                                    <input type="date" name="end-date" class="control-form" required>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-success">Reserve</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
-                </div>
-            <?php } ?>
+
+
+                    <div class="modal fade" id="ModalStatus<?php echo $acommodation['id_acommodation']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5 " id="exampleModalLabel">Booking an accommodation</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="" method="post">
+                                    <div class="modal-body">
+                                        <h4 class="p-3 mb-2 alert alert-secondary"><?php echo $acommodation['name']; ?></h4>
+                                        <input type="hidden" name="id_acommodation" value="<?php echo $acommodation['id_acommodation'] ?>">
+                                        <label for="" class="w-100">Check-in-Date</label>
+                                        <input type="date" name="start-date" class="control-form" required>
+                                        <label for="" class="w-100">Check-out-Date</label>
+                                        <input type="date" name="end-date" class="control-form" required>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-success">Reserve</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+
         </section>
         <?php
-        if(isset($_POST['id_booking']))
-        {
-            $id_booking= (int) $_POST['id_booking'];
+        if (isset($_POST['id_booking'])) {
+            $id_booking = (int) $_POST['id_booking'];
             $_SESSION['id_booking'] = $id_booking;
             Book::cancelBooking($id_booking);
         }
@@ -111,7 +124,7 @@ Authentication::verifySession();
             $endDate = $_POST['end-date'];
 
             if ($startDate > $endDate) {
-                echo "Error: Check-out date must be after check-in date.";
+                echo "<div class='alert alert-danger w-100' role='alert'>Error: Check-out date must be after check-in date.</div>";
             } else {
                 $id_acommodation = (int) $_POST['id_acommodation'];
                 $booking = new Book($_SESSION['id_user'], $id_acommodation, $startDate, $endDate);

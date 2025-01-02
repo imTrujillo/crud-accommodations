@@ -28,12 +28,12 @@ class Book
 
             if ($result)
             {
-                echo "The reservation was succesful";
+                echo "<div class='alert alert-success w-100' role='alert'>The reservation was succesful</div>";
             }
         }
         catch(PDOException $ex)
         {
-            echo "Fatal error in registering the acommodation. " . $ex->getMessage();
+            $ex->getMessage();
         }
     }
 
@@ -47,12 +47,12 @@ class Book
 
             if($result)
             {
-                echo "The reservation was been cancelled.";
+                echo "<div class='alert alert-success w-100' role='alert'>The reservation has been cancelled.</div>";
             }
         }
         catch (PDOException $ex)
         {
-            echo "Fatal error in cancelling the reservation." . $ex->getMessage();
+            echo "<div class='alert alert-danger w-100' role='alert'>Fatal error in cancelling the reservation." . $ex->getMessage() . "</div>";
         }
     }
 

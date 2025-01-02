@@ -29,12 +29,12 @@ class Acommodation
 
             if ($result)
             {
-                echo "<script>window.location.href= './index.php';</script>";
+                echo "<div class='alert alert-success w-100' role='alert'>The accommodation was registered succesfully.</div>";
             }
         }
         catch(PDOException $ex)
         {
-            echo "Fatal error in registering the acommodation. " . $ex->getMessage();
+            echo  "<div class='alert alert-danger w-100' role='alert'>Fatal error in registering the acommodation" . $ex->getMessage() . "</div>" ;
         }
     }
 
@@ -59,12 +59,13 @@ class Acommodation
 
             if($result)
             {
-                echo "The status has been updated.";
+                
+                echo " <div class='alert alert-success w-100' role='alert'>The status has been updated.</div> ";
             }
         }
         catch (PDOException $ex)
         {
-            echo "Fatal error in updating the status." . $ex->getMessage();
+            echo "<div class='alert alert-danger w-100' role='alert'>Fatal error in updating the status. " . $ex->getMessage(). "</div>" ;
         }
     }
 

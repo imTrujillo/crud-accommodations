@@ -9,22 +9,19 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light align-items-center" style="background-color: #e3f2fd;">
-        <div class="container-fluid align-items-center">
-            <div class="align-items-center">
+    <nav class="navbar navbar-light align-items-center" style="background-color: #e3f2fd;">
+        <div class="d-flex align-items-center mb-3">
             <img class="mx-2" src="assets/logo.png" width="30" height="30" alt="">
             <a class="navbar-brand" href="#"><strong>HotelPedia</strong></a>
-            </div>
-            <div class="d-flex align-items-center w-50">
-            <h3 class="navbar-brand">High Quality Experience</h3>
+        </div>
+        <div class="d-flex flex-xs-column flex-md-row">
+            <h3 class="navbar-brand mx-2">High Quality Experience</h3>
             <?php if (isset($_SESSION['id_user'])) { ?>
-                <a href="./logout.php" class="btn btn-primary mx-3 align-items-center w-25"><img src="assets/login-icon.png" class="mx-2" width="30" height="30" alt="">Logout</a>
+                <a href="./logout.php" class="btn btn btn-primary mx-3 d-flex align-items-center w-50"><img src="assets/login-icon.png" class="mx-2" width="30" height="30" alt="">Logout</a>
             <?php } else { ?>
-                <a href="./login.php" class="btn btn btn-primary mx-3 align-items-center w-25"><img src="assets/login-icon.png" class="mx-2" width="30" height="30" alt="">Login</a>
-                <a href="./register.php" class="btn btn-outline-success mx-3 w-25">Register</a>
+                <a href="./login.php" class="btn btn btn-primary mx-3 d-flex align-items-center w-25"><img src="assets/login-icon.png" class="mx-2" width="30" height="30" alt="">Login</a>
+                <a href="./register.php" class="btn btn-outline-success me-3 w-25">Register</a>
             <?php } ?>
-            </div>
-
         </div>
     </nav>
 </body>

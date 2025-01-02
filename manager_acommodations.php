@@ -21,12 +21,17 @@ Authentication::verifySession();
     include "/xampp/htdocs/ProjectPHP/AcommodationCRUD/assets/navbar.php"
     ?>
     <main class="container">
-        <h1>Acommodations Manager</h1>
-        <h3 class="d-flex justify-content-center m-3">Welcome Back <?php echo $_SESSION['name']; ?> !</h3>s
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Register Acommodation</button>
-        <table class="table">
+    <div class="d-flex justify-content-center flex-column" style="align-items: center;">
+        <img src="assets/profile-icon.jpg" class=" mx-3" style="width: 14rem; height: 14rem;" alt="">
+        <h1 class="mx-3 mt-3"><strong>Acommodations Manager</strong></h1>
+        <h3 class="m-3">Welcome Back Admin <?php echo $_SESSION['name']; ?> !</h3>s
+    </div>
 
-            <head>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Register Acommodation</button>
+        
+        <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <head class="table-dark">
                 <th>Name</th>
                 <th>Description</th>
                 <th>Address</th>
@@ -48,7 +53,7 @@ Authentication::verifySession();
                         <td><?php echo $acommodation['address'] ?></td>
                         <td><?php echo $acommodation['price'] ?></td>
                         <td class="status <?php echo $class_status ?>"><?php echo $acommodation['available']  ?></td>
-                        <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModalStatus<?php echo $acommodation['id_acommodation']; ?>"> Change State</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalStatus<?php echo $acommodation['id_acommodation']; ?>"> Change State</button></td>
                     </tr>
 
                     <!-- Modal -->
@@ -81,6 +86,7 @@ Authentication::verifySession();
                 <?php } ?>
             </tbody>
         </table>
+        </div>
 
         <!-- Create the acommodation -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
