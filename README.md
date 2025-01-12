@@ -7,3 +7,9 @@ USER: ukxomjex4klr0ezd
 
 PASSWORD: dPBK24P9VCDaFaLsvAy7  
 
+# User roles:
+ADMIN: admin@gmail.com
+
+USER: user@gmail.com
+
+PASSWORD: 12345678
