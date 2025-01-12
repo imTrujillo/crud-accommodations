@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "/xampp/htdocs/ProjectPHP/AcommodationCRUD/class/Auth.php";
+require_once "/xampp/htdocs/AcommodationCRUD/class/Auth.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +29,7 @@ require_once "/xampp/htdocs/ProjectPHP/AcommodationCRUD/class/Auth.php";
         echo "<p>" . $_GET['error'] . "</p>";
     }
     ?>
-    <div class="card m-4 p-4 w-75 d-flex flex-md-row flex-xs-column"  >
+    <div class="card m-4 p-4 w-75 d-flex flex-md-row flex-xs-column">
         <img src="assets/wallpaper.jpg" class="col col-md-6 rounded img-fluid" alt="...">
         <div class="card-body" style="text-align:left;">
             <h1 class="fw-bold me-5 mt-5" style="color: blue;">Login into your account</h1>
@@ -47,13 +47,11 @@ require_once "/xampp/htdocs/ProjectPHP/AcommodationCRUD/class/Auth.php";
 
     <?php
     if (isset($_POST['email'], $_POST['password'])) {
-        if(isset($_POST['email'], $_POST['password']) && strlen($_POST['password']) >= 8 && strlen($_POST['email']) > 8)
-        {
+        if (isset($_POST['email'], $_POST['password']) && strlen($_POST['password']) >= 8 && strlen($_POST['email']) > 8) {
             $email = $_POST['email'];
             $password = $_POST['password'];
             Authentication::login($email, $password);
         }
-
     }
     ?>
 </body>

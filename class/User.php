@@ -1,5 +1,5 @@
-<?php 
-require_once "/xampp/htdocs/ProjectPHP/AcommodationCRUD/class/Connection.php";
+<?php
+require_once "/xampp/htdocs/AcommodationCRUD/class/Connection.php";
 class User
 {
     public static function all()
@@ -12,4 +12,3 @@ class User
         return $result;
     }
 }
-?>

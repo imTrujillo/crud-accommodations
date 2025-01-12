@@ -1,6 +1,11 @@
 <?php
+ob_start();
 require_once "./class/Auth.php";
 Authentication::verifySession();
+if ($_SESSION['roll'] != 'user') {
+    header('Location: manager_acommodations.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,9 +18,9 @@ Authentication::verifySession();
 
 <body>
     <?php
-    include_once "/xampp/htdocs/ProjectPHP/AcommodationCRUD/class/Acommodation.php";
-    include_once "/xampp/htdocs/ProjectPHP/AcommodationCRUD/assets/navbar.php";
-    require_once "/xampp/htdocs/ProjectPHP/AcommodationCRUD/class/Booking.php";
+    include_once "/xampp/htdocs/AcommodationCRUD/class/Acommodation.php";
+    include_once "/xampp/htdocs/AcommodationCRUD/assets/navbar.php";
+    require_once "/xampp/htdocs/AcommodationCRUD/class/Booking.php";
     ?>
     <div class="d-flex justify-content-center flex-column" style="align-items: center;">
         <img src="assets/profile-icon.jpg" class=" mx-3" style="width: 14rem; height: 14rem;" alt="">
@@ -72,7 +77,14 @@ Authentication::verifySession();
                             <div class="card-body">
                                 <h6 class="card-text"><?php echo $acommodation['address'] ?></h6>
                                 <h5 class="card-title"><?php echo $acommodation['name'] ?></h5>
+                                <div>
+                                    <?php for ($i = 0; $i < $acommodation['stars']; $i++) { ?>
+                                        <img class="" src="assets/star.png" width="20" height="20" alt="">
+                                    <?php } ?>
+                                </div>
                                 <p class="card-text"><?php echo $acommodation['description'] ?></p>
+                                <h6 class="card-text">Rooms: <?php echo $acommodation['rooms'] ?></h6>
+                                <h6 class="card-text">Capacity: <?php echo $acommodation['capacity'] ?> Guests</h6>
                                 <h5 class="card-title"> $ <?php echo $acommodation['price'] ?></h5>
                                 <?php if (!$isBooked) { ?>
                                     <a href="#" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#ModalStatus<?php echo $acommodation['id_acommodation']; ?>">Book</a>
@@ -115,9 +127,12 @@ Authentication::verifySession();
         <?php
         if (isset($_POST['id_booking'])) {
             $id_booking = (int) $_POST['id_booking'];
-            $_SESSION['id_booking'] = $id_booking;
-            Book::cancelBooking($id_booking);
+
+            if ($booking && $booking['id_user'] == $_SESSION['id_user']) {
+                Book::cancelBooking($id_booking);
+            }
         }
+
 
         if (isset($_POST['start-date'], $_POST['end-date'], $_POST['id_acommodation'])) {
             $startDate = $_POST['start-date'];
@@ -125,14 +140,18 @@ Authentication::verifySession();
 
             if ($startDate > $endDate) {
                 echo "<div class='alert alert-danger w-100' role='alert'>Error: Check-out date must be after check-in date.</div>";
+            } else if (new DateTime($startDate) < new DateTime()) {
+                echo "<div class='alert alert-danger w-100' role='alert'>Error: Check-in date mustn't be before today.</div>";
             } else {
                 $id_acommodation = (int) $_POST['id_acommodation'];
                 $booking = new Book($_SESSION['id_user'], $id_acommodation, $startDate, $endDate);
                 $booking->save();
             }
         }
-
+        include_once "/xampp/htdocs/AcommodationCRUD/assets/footer.php";
+        ob_end_flush();
         ?>
+
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
